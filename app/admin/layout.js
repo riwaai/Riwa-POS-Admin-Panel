@@ -35,11 +35,20 @@ const navigation = [
   { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
   { name: 'Customers', href: '/admin/customers', icon: Users },
   {
+    name: 'Promotions',
+    icon: Store,
+    children: [
+      { name: 'Coupons', href: '/admin/coupons' },
+      { name: 'Loyalty Program', href: '/admin/loyalty' },
+    ],
+  },
+  { name: 'Integrations', href: '/admin/integrations', icon: Link2 },
+  { name: 'POS Config', href: '/admin/pos', icon: Layers },
+  {
     name: 'Settings',
     icon: Settings,
     children: [
       { name: 'Branch Info', href: '/admin/settings/branch' },
-      { name: 'Integrations', href: '/admin/settings/integrations' },
     ],
   },
   { name: 'Users', href: '/admin/users', icon: UserCog },
