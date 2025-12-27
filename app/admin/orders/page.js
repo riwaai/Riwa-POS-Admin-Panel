@@ -107,8 +107,24 @@ export default function OrdersPage() {
     setLoading(false)
   }
 
+  const fetchMenuItems = async () => {
+    try {
+      const [itemsRes, categoriesRes] = await Promise.all([
+        fetch('/api/admin/items'),
+        fetch('/api/admin/categories')
+      ])
+      const itemsData = await itemsRes.json()
+      const categoriesData = await categoriesRes.json()
+      if (itemsData.success) setMenuItems(itemsData.data?.filter(i => i.status === 'active') || [])
+      if (categoriesData.success) setCategories(categoriesData.data || [])
+    } catch (error) {
+      console.error('Error fetching menu:', error)
+    }
+  }
+
   useEffect(() => {
     fetchOrders()
+    fetchMenuItems()
   }, [statusFilter, channelFilter, dateRange])
 
   const fetchOrderItems = async (orderId) => {
@@ -128,6 +144,87 @@ export default function OrdersPage() {
     setOrderDetailsOpen(true)
     await fetchOrderItems(order.id)
   }
+
+  // Cart functions
+  const addToCart = (item) => {
+    const existing = cart.find(c => c.id === item.id)
+    if (existing) {
+      setCart(cart.map(c => c.id === item.id ? { ...c, quantity: c.quantity + 1 } : c))
+    } else {
+      setCart([...cart, { ...item, quantity: 1 }])
+    }
+  }
+
+  const removeFromCart = (itemId) => {
+    setCart(cart.filter(c => c.id !== itemId))
+  }
+
+  const updateCartQuantity = (itemId, quantity) => {
+    if (quantity <= 0) {
+      removeFromCart(itemId)
+    } else {
+      setCart(cart.map(c => c.id === itemId ? { ...c, quantity } : c))
+    }
+  }
+
+  const cartTotal = cart.reduce((sum, item) => sum + (item.base_price * item.quantity), 0)
+
+  const openCreateOrder = () => {
+    setCart([])
+    setNewOrderData({
+      customer_name: '',
+      customer_phone: '',
+      customer_email: '',
+      order_type: 'dine_in',
+      notes: ''
+    })
+    setSelectedCategory('all')
+    setCreateOrderOpen(true)
+  }
+
+  const handleCreateOrder = async () => {
+    if (cart.length === 0) {
+      toast({ variant: 'destructive', title: 'Error', description: 'Please add items to the order' })
+      return
+    }
+
+    setSavingOrder(true)
+    try {
+      const response = await fetch('/api/admin/orders/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...newOrderData,
+          items: cart.map(item => ({
+            item_id: item.id,
+            item_name_en: item.name_en,
+            item_name_ar: item.name_ar,
+            quantity: item.quantity,
+            unit_price: item.base_price,
+            total_price: item.base_price * item.quantity
+          })),
+          subtotal: cartTotal,
+          total_amount: cartTotal
+        })
+      })
+
+      const data = await response.json()
+      if (data.success) {
+        toast({ title: 'Success', description: `Order ${data.data.order_number} created` })
+        setCreateOrderOpen(false)
+        fetchOrders()
+      } else {
+        toast({ variant: 'destructive', title: 'Error', description: data.error })
+      }
+    } catch (error) {
+      toast({ variant: 'destructive', title: 'Error', description: 'Failed to create order' })
+    }
+    setSavingOrder(false)
+  }
+
+  const filteredMenuItems = selectedCategory === 'all' 
+    ? menuItems 
+    : menuItems.filter(i => i.category_id === selectedCategory)
 
   const updateOrderStatus = async (orderId, newStatus) => {
     setUpdatingStatus(true)
