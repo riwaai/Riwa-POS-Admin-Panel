@@ -34,6 +34,7 @@ import {
 export default function DashboardPage() {
   const [stats, setStats] = useState(null)
   const [recentOrders, setRecentOrders] = useState([])
+  const [weeklySales, setWeeklySales] = useState([])
   const [loading, setLoading] = useState(true)
 
   const fetchDashboardData = async () => {
@@ -44,6 +45,7 @@ export default function DashboardPage() {
       if (data.success) {
         setStats(data.stats)
         setRecentOrders(data.recentOrders || [])
+        setWeeklySales(data.weeklySales || [])
       }
     } catch (error) {
       console.error('Error fetching dashboard:', error)
