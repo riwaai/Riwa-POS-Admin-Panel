@@ -662,6 +662,116 @@ export default function OrdersPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Create Order Dialog */}
+      <Dialog open={createOrderOpen} onOpenChange={setCreateOrderOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="text-[#1e3a5f]">Create New Order</DialogTitle>
+            <DialogDescription>Add items and customer details</DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Menu Items */}
+            <div className="flex flex-col overflow-hidden">
+              <div className="flex gap-2 mb-3 flex-wrap">
+                <Button size="sm" variant={selectedCategory === 'all' ? 'default' : 'outline'} 
+                  className={selectedCategory === 'all' ? 'bg-[#1e3a5f]' : ''}
+                  onClick={() => setSelectedCategory('all')}>All</Button>
+                {categories.map(cat => (
+                  <Button key={cat.id} size="sm" variant={selectedCategory === cat.id ? 'default' : 'outline'}
+                    className={selectedCategory === cat.id ? 'bg-[#1e3a5f]' : ''}
+                    onClick={() => setSelectedCategory(cat.id)}>{cat.name_en}</Button>
+                ))}
+              </div>
+              <ScrollArea className="flex-1 pr-2">
+                <div className="grid grid-cols-2 gap-2">
+                  {filteredMenuItems.map(item => (
+                    <div key={item.id} onClick={() => addToCart(item)}
+                      className="p-3 border rounded-lg cursor-pointer hover:bg-gray-50 hover:border-[#1e3a5f]">
+                      <p className="font-medium text-sm truncate">{item.name_en}</p>
+                      <p className="text-[#1e3a5f] font-bold">{item.base_price?.toFixed(2)} KWD</p>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+
+            {/* Cart & Customer Info */}
+            <div className="flex flex-col overflow-hidden">
+              <div className="flex-1 overflow-auto">
+                <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <ShoppingCart className="h-4 w-4" /> Cart ({cart.length})
+                </h4>
+                {cart.length > 0 ? (
+                  <div className="space-y-2 mb-4">
+                    {cart.map(item => (
+                      <div key={item.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">{item.name_en}</p>
+                          <p className="text-xs text-gray-500">{item.base_price?.toFixed(2)} KWD each</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button size="icon" variant="outline" className="h-6 w-6"
+                            onClick={() => updateCartQuantity(item.id, item.quantity - 1)}>
+                            <Minus className="h-3 w-3" />
+                          </Button>
+                          <span className="w-6 text-center">{item.quantity}</span>
+                          <Button size="icon" variant="outline" className="h-6 w-6"
+                            onClick={() => updateCartQuantity(item.id, item.quantity + 1)}>
+                            <Plus className="h-3 w-3" />
+                          </Button>
+                          <Button size="icon" variant="ghost" className="h-6 w-6 text-red-500"
+                            onClick={() => removeFromCart(item.id)}>
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex justify-between font-bold text-lg border-t pt-2">
+                      <span>Total</span>
+                      <span className="text-[#1e3a5f]">{cartTotal.toFixed(2)} KWD</span>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-gray-400 text-sm mb-4">Click items to add to cart</p>
+                )}
+
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div><Label className="text-xs">Customer Name</Label>
+                      <Input value={newOrderData.customer_name} placeholder="Walk-in"
+                        onChange={e => setNewOrderData({...newOrderData, customer_name: e.target.value})} /></div>
+                    <div><Label className="text-xs">Phone</Label>
+                      <Input value={newOrderData.customer_phone} placeholder="+965"
+                        onChange={e => setNewOrderData({...newOrderData, customer_phone: e.target.value})} /></div>
+                  </div>
+                  <div><Label className="text-xs">Order Type</Label>
+                    <Select value={newOrderData.order_type} onValueChange={v => setNewOrderData({...newOrderData, order_type: v})}>
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="dine_in">Dine In</SelectItem>
+                        <SelectItem value="takeaway">Takeaway</SelectItem>
+                        <SelectItem value="delivery">Delivery</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div><Label className="text-xs">Notes</Label>
+                    <Textarea value={newOrderData.notes} placeholder="Special instructions..."
+                      onChange={e => setNewOrderData({...newOrderData, notes: e.target.value})} rows={2} /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter className="mt-4">
+            <Button variant="outline" onClick={() => setCreateOrderOpen(false)}>Cancel</Button>
+            <Button onClick={handleCreateOrder} disabled={savingOrder || cart.length === 0} className="bg-[#1e3a5f]">
+              {savingOrder ? 'Creating...' : `Create Order (${cartTotal.toFixed(2)} KWD)`}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
