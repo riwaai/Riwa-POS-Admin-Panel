@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Next.js MongoDB Template',
-  description: 'A simple template with App Router, MongoDB, and shadcn/ui',
+  title: 'RIWA POS System',
+  description: 'Restaurant Point of Sale & Management System',
 }
 
 export default function RootLayout({ children }) {
