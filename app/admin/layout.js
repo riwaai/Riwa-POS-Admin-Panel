@@ -16,7 +16,8 @@ import {
   Store,
   Layers,
   UserCog,
-  Link2
+  Link2,
+  BarChart3
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -42,6 +43,7 @@ const navigation = [
       { name: 'Loyalty Program', href: '/admin/loyalty' },
     ],
   },
+  { name: 'Reports', href: '/admin/reports', icon: BarChart3 },
   { name: 'Integrations', href: '/admin/integrations', icon: Link2 },
   { name: 'POS Config', href: '/admin/pos', icon: Layers },
   {
@@ -59,6 +61,7 @@ export default function AdminLayout({ children }) {
   const [expandedItems, setExpandedItems] = useState(['Menu Management', 'Settings'])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [restaurantName, setRestaurantName] = useState('Bam Burgers')
   const router = useRouter()
   const pathname = usePathname()
 
@@ -68,6 +71,15 @@ export default function AdminLayout({ children }) {
       router.push('/admin/login')
     } else if (auth) {
       setIsLoggedIn(true)
+      // Fetch restaurant name
+      fetch('/api/admin/settings/tenant')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.data?.name) {
+            setRestaurantName(data.data.name)
+          }
+        })
+        .catch(() => {})
     }
     setLoading(false)
   }, [pathname, router])
