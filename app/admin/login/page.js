@@ -43,8 +43,8 @@ export default function LoginPage() {
           <div className="mx-auto w-16 h-16 bg-[#d4af37] rounded-2xl flex items-center justify-center mb-4">
             <Store className="w-8 h-8 text-white" />
           </div>
-          <CardTitle className="text-2xl font-bold text-[#1e3a5f]">RIWA POS</CardTitle>
-          <CardDescription className="text-gray-500">Admin Panel - Bam Burgers</CardDescription>
+          <CardTitle className="text-2xl font-bold text-[#1e3a5f]">Bam Burgers</CardTitle>
+          <CardDescription className="text-gray-500">Admin Panel</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
