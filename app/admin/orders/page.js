@@ -13,7 +13,11 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  Package
+  Package,
+  Plus,
+  Minus,
+  ShoppingCart,
+  Trash2
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -33,6 +37,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from '@/components/ui/dialog'
 import {
   Select,
@@ -47,6 +52,8 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useToast } from '@/hooks/use-toast'
 import { Toaster } from '@/components/ui/toaster'
 import { format } from 'date-fns'
@@ -63,6 +70,19 @@ export default function OrdersPage() {
   const [orderDetailsOpen, setOrderDetailsOpen] = useState(false)
   const [orderItems, setOrderItems] = useState([])
   const [updatingStatus, setUpdatingStatus] = useState(false)
+  const [createOrderOpen, setCreateOrderOpen] = useState(false)
+  const [menuItems, setMenuItems] = useState([])
+  const [categories, setCategories] = useState([])
+  const [cart, setCart] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [newOrderData, setNewOrderData] = useState({
+    customer_name: '',
+    customer_phone: '',
+    customer_email: '',
+    order_type: 'dine_in',
+    notes: ''
+  })
+  const [savingOrder, setSavingOrder] = useState(false)
   const printRef = useRef(null)
   const { toast } = useToast()
 
