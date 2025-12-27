@@ -365,14 +365,23 @@ export default function OrdersPage() {
           <h1 className="text-2xl font-bold text-[#1e3a5f]">Orders</h1>
           <p className="text-gray-500 text-sm">Manage and track all orders</p>
         </div>
-        <Button
-          onClick={fetchOrders}
-          variant="outline"
-          className="border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
-        >
-          <RefreshCw className="h-4 w-4 mr-2" />
-          Refresh
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={fetchOrders}
+            variant="outline"
+            className="border-[#1e3a5f] text-[#1e3a5f] hover:bg-[#1e3a5f] hover:text-white"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Refresh
+          </Button>
+          <Button
+            onClick={openCreateOrder}
+            className="bg-[#1e3a5f] hover:bg-[#152a45]"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Create Order
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
