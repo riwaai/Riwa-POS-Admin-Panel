@@ -156,7 +156,7 @@ export default function AdminLayout({ children }) {
                 <Store className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-white font-bold text-lg">RIWA POS</h1>
+                <h1 className="text-white font-bold text-lg">{restaurantName}</h1>
                 <p className="text-[#a8c5e6] text-xs">Admin Panel</p>
               </div>
             </div>
