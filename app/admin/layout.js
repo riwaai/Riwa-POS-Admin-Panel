@@ -121,7 +121,7 @@ export default function AdminLayout({ children }) {
           <div className="w-8 h-8 bg-[#d4af37] rounded-lg flex items-center justify-center">
             <Store className="w-5 h-5 text-white" />
           </div>
-          <span className="text-white font-semibold">RIWA POS</span>
+          <span className="text-white font-semibold">{restaurantName}</span>
         </div>
         <Button
           variant="ghost"
