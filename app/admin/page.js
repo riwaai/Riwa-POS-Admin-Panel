@@ -73,15 +73,8 @@ export default function DashboardPage() {
     )
   }
 
-  const chartData = [
-    { name: 'Mon', sales: 125 },
-    { name: 'Tue', sales: 180 },
-    { name: 'Wed', sales: 150 },
-    { name: 'Thu', sales: 220 },
-    { name: 'Fri', sales: 280 },
-    { name: 'Sat', sales: 350 },
-    { name: 'Sun', sales: 300 },
-  ]
+  // Use real weekly sales data from API
+  const chartData = weeklySales.length > 0 ? weeklySales : []
 
   if (loading) {
     return (
@@ -97,7 +90,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#1e3a5f]">Dashboard</h1>
-          <p className="text-gray-500 text-sm">Welcome back to Bam Burgers Admin</p>
+          <p className="text-gray-500 text-sm">Welcome back! Here's your overview</p>
         </div>
         <Button
           onClick={fetchDashboardData}
