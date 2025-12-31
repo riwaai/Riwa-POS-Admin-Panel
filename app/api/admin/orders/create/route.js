@@ -8,8 +8,8 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 // Use service role for server-side operations
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-const TENANT_ID = process.env.TENANT_ID || 'eatery-control-9'
-const BRANCH_ID = process.env.BRANCH_ID || 'eatery-control-9'
+const TENANT_ID = process.env.TENANT_ID || 'd82147fa-f5e3-474c-bb39-6936ad3b519a'
+const BRANCH_ID = process.env.BRANCH_ID || '3f9570b2-24d2-4f2d-81d7-25c6b35da76b'
 
 export async function POST(request) {
   try {
