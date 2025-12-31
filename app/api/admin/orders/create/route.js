@@ -47,6 +47,7 @@ export async function POST(request) {
       id: orderId,
       tenant_id: TENANT_ID,
       branch_id: BRANCH_ID,
+      user_id: DEFAULT_USER_ID,
       order_number: orderNumber,
       customer_name: customer_name || 'Walk-in',
       customer_phone: customer_phone || null,
