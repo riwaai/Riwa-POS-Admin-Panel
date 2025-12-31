@@ -26,6 +26,7 @@ import { cn } from '@/lib/utils'
 
 const navigation = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+  { name: 'KDS', href: '/admin/kds', icon: ChefHat },
   {
     name: 'Menu Management',
     icon: UtensilsCrossed,
