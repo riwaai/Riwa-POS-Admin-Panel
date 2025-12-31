@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 const TENANT_ID = process.env.TENANT_ID || 'd82147fa-f5e3-474c-bb39-6936ad3b519a'
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://bam-manager.preview.emergentagent.com'
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://eatery-control-9.preview.emergentagent.com'
 
 // Get MyFatoorah configuration from tenant settings
 async function getMyFatoorahConfig() {
