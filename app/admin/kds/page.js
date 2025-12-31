@@ -42,7 +42,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/hooks/use-toast'
 import { Toaster } from '@/components/ui/toaster'
 
-const TENANT_ID = process.env.NEXT_PUBLIC_TENANT_ID || 'eatery-control-9'
+const TENANT_ID = 'd82147fa-f5e3-474c-bb39-6936ad3b519a'
 
 const ORDER_STATUSES = [
   { key: 'placed', label: 'Order Placed', icon: Clock, color: 'bg-blue-500' },
