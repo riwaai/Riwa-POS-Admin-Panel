@@ -54,7 +54,6 @@ export async function POST(request) {
       channel: channel || 'pos',
       status: 'placed',
       payment_status: 'pending',
-      payment_method: 'cash',
       subtotal: parseFloat(subtotal) || 0,
       tax_amount: parseFloat(tax_amount) || 0,
       discount_amount: parseFloat(discount_amount) || 0,
