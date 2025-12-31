@@ -10,6 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 const TENANT_ID = process.env.TENANT_ID || 'd82147fa-f5e3-474c-bb39-6936ad3b519a'
 const BRANCH_ID = process.env.BRANCH_ID || '3f9570b2-24d2-4f2d-81d7-25c6b35da76b'
+const DEFAULT_USER_ID = 'd493055a-296f-4ee2-9c2b-9f016f1e96ad' // Admin User
 
 export async function POST(request) {
   try {
